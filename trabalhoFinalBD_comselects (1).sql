@@ -149,3 +149,56 @@ insert into pedido(pedido_dt_data,fk_pedprod_cd_id,fk_usuario_cd_id) values
 ('09/08/2023',5,1),
 ('09/08/2023',2,4),
 ('09/08/2023',4,2);
+
+--view seleciona quantidade de itens por categoria
+create view selecionaItensPorCategoria as
+SELECT c.cate_tx_nome AS Categoria, COUNT(p.prod_cd_id) AS total_de_produtos_por_categoria
+FROM categoria c
+INNER JOIN produto p ON c.cate_cd_id = p.fk_cate_id
+INNER JOIN pedidoproduto pp ON p.prod_cd_id = pp.fk_prod_cd_id
+INNER JOIN pedido ped ON pp.fk_prod_cd_id = ped.fk_pedprod_cd_id
+GROUP BY c.cate_tx_nome;
+
+select * from selecionaItensPorCategoria;
+
+-- Crie uma view de nota fiscal
+CREATE VIEW nota_fiscal AS
+select
+    ped.pedido_cd_id AS numero_nota,
+    ped.pedido_dt_data AS data_emissao,
+    u.usuario_tx_nome AS nome_cliente,
+    u.usuario_tx_cpf AS cpf_cliente,
+    e.end_tx_rua AS endereco_entrega,
+    e.end_int_num AS numero_entrega,
+    e.end_tx_complemento AS complemento_entrega,
+    e.end_tx_bairro AS bairro_entrega,
+    e.end_tx_cidade AS cidade_entrega,
+    e.end_tx_estado AS estado_entrega,
+    e.end_tx_cep AS cep_entrega,
+    p.prod_tx_nome AS nome_produto,
+    pp.pedprod_int_qnt AS quantidade,
+    p.prod_nm_valoruni AS valor_unitario,
+    (pp.pedprod_int_qnt * p.prod_nm_valoruni) AS valor_total
+FROM pedido ped
+INNER JOIN usuario u ON ped.fk_usuario_cd_id = u.usuario_cd_id
+INNER JOIN pedidoproduto pp ON ped.pedido_cd_id = pp.fk_prod_cd_id
+INNER JOIN produto p ON pp.fk_prod_cd_id = p.prod_cd_id
+INNER JOIN endereco e ON u.fk_end_cd_id = e.end_cd_id;
+
+select * from nota_fiscal;
+
+--Criando os usuario:
+create user vendedor1 password '123456';
+create user comprador1 password '111111';
+
+--Dando permissão para a role vendedor:
+GRANT SELECT, INSERT, UPDATE, DELETE ON produto, categoria TO vendedor1;
+select * from produto;
+select * from usuario;
+
+--Dando permissão para a role comprador:
+GRANT select on produto, categoria, pedidoproduto to comprador1;
+select * from categoria;
+select * from usuario;
+
+
