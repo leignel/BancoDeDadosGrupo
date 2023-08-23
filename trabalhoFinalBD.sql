@@ -150,6 +150,20 @@ insert into pedido(pedido_dt_data,fk_pedprod_cd_id,fk_usuario_cd_id) values
 ('09/08/2023',2,4),
 ('09/08/2023',4,2);
 
+<<<<<<< HEAD
+=======
+--view seleciona quantidade de itens por categoria
+create view selecionaItensPorCategoria as
+SELECT c.cate_tx_nome AS Categoria, COUNT(p.prod_cd_id) AS total_de_produtos_por_categoria
+FROM categoria c
+INNER JOIN produto p ON c.cate_cd_id = p.fk_cate_id
+INNER JOIN pedidoproduto pp ON p.prod_cd_id = pp.fk_prod_cd_id
+INNER JOIN pedido ped ON pp.fk_prod_cd_id = ped.fk_pedprod_cd_id
+GROUP BY c.cate_tx_nome;
+
+select * from selecionaItensPorCategoria;
+
+>>>>>>> b3a31df8138364e2d2c1bf7cf55f756ce32a0b2b
 -- Crie uma view de nota fiscal
 CREATE VIEW nota_fiscal AS
 select
@@ -176,6 +190,7 @@ INNER JOIN endereco e ON u.fk_end_cd_id = e.end_cd_id;
 
 select * from nota_fiscal;
 
+<<<<<<< HEAD
 -- Consulta view seleciona quantidade de itens por categoria
 create view selecionaItensPorCategoria as
 SELECT c.cate_tx_nome AS Categoria, COUNT(p.prod_cd_id) AS total_de_produtos_por_categoria
@@ -240,6 +255,8 @@ where
 
 select * from pedidosUsuarios;
 
+=======
+>>>>>>> b3a31df8138364e2d2c1bf7cf55f756ce32a0b2b
 --Criando os usuario:
 create user vendedor1 password '123456';
 create user comprador1 password '111111';
