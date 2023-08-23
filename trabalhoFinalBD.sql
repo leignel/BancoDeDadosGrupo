@@ -12,21 +12,7 @@ create database ofertas_express;
 
 --Inserção de dados:
 
---1) Usuario:
-create table usuario(
-	usuario_cd_id serial,
-	usuario_tx_nome varchar(50) not null,
-	usuario_tx_login varchar(50) not null,
-	usuario_tx_cpf varchar(14) not null,
-	usuario_tx_nascimento date not null,
-	fk_end_cd_id integer,
-	fk_contato_cd_id integer,
-	primary key (usuario_cd_id),
-	foreign key(fk_end_cd_id) references endereco (end_cd_id),
-	foreign key(fk_contato_cd_id) references contato (contato_cd_id)
-);
-
---2) Endereço:
+--1) Endereço:
 create table endereco(
 	end_cd_id serial,
 	end_tx_rua varchar(100) not null,
@@ -39,7 +25,7 @@ create table endereco(
 	primary key(end_cd_id)
 );
 
---3) Contato:
+--2) Contato:
 create table contato(
 	contato_cd_id serial,
 	cont_tx_telfix varchar(15) not null,
@@ -48,12 +34,26 @@ create table contato(
 	primary key (contato_cd_id)
 );
 
---4) Categoria:
+--3) Categoria:
 create table categoria(
 	cate_cd_id serial,
 	cate_tx_nome varchar(30) not null,
 	cate_tx_descricao varchar(200) not null,
 	primary key(cate_cd_id)
+);
+
+--4) Usuario:
+create table usuario(
+	usuario_cd_id serial,
+	usuario_tx_nome varchar(50) not null,
+	usuario_tx_login varchar(50) not null,
+	usuario_tx_cpf varchar(14) not null,
+	usuario_tx_nascimento date not null,
+	fk_end_cd_id integer,
+	fk_contato_cd_id integer,
+	primary key (usuario_cd_id),
+	foreign key(fk_end_cd_id) references endereco (end_cd_id),
+	foreign key(fk_contato_cd_id) references contato (contato_cd_id)
 );
 
 --5) Produto:
@@ -149,3 +149,109 @@ insert into pedido(pedido_dt_data,fk_pedprod_cd_id,fk_usuario_cd_id) values
 ('09/08/2023',5,1),
 ('09/08/2023',2,4),
 ('09/08/2023',4,2);
+
+-- Crie uma view de nota fiscal
+CREATE VIEW nota_fiscal AS
+select
+    ped.pedido_cd_id AS numero_nota,
+    ped.pedido_dt_data AS data_emissao,
+    u.usuario_tx_nome AS nome_cliente,
+    u.usuario_tx_cpf AS cpf_cliente,
+    e.end_tx_rua AS endereco_entrega,
+    e.end_int_num AS numero_entrega,
+    e.end_tx_complemento AS complemento_entrega,
+    e.end_tx_bairro AS bairro_entrega,
+    e.end_tx_cidade AS cidade_entrega,
+    e.end_tx_estado AS estado_entrega,
+    e.end_tx_cep AS cep_entrega,
+    p.prod_tx_nome AS nome_produto,
+    pp.pedprod_int_qnt AS quantidade,
+    p.prod_nm_valoruni AS valor_unitario,
+    (pp.pedprod_int_qnt * p.prod_nm_valoruni) AS valor_total
+FROM pedido ped
+INNER JOIN usuario u ON ped.fk_usuario_cd_id = u.usuario_cd_id
+INNER JOIN pedidoproduto pp ON ped.pedido_cd_id = pp.fk_prod_cd_id
+INNER JOIN produto p ON pp.fk_prod_cd_id = p.prod_cd_id
+INNER JOIN endereco e ON u.fk_end_cd_id = e.end_cd_id;
+
+select * from nota_fiscal;
+
+-- Consulta view seleciona quantidade de itens por categoria
+create view selecionaItensPorCategoria as
+SELECT c.cate_tx_nome AS Categoria, COUNT(p.prod_cd_id) AS total_de_produtos_por_categoria
+FROM categoria c
+INNER JOIN produto p ON c.cate_cd_id = p.fk_cate_id
+INNER JOIN pedidoproduto pp ON p.prod_cd_id = pp.fk_prod_cd_id
+INNER JOIN pedido ped ON pp.fk_prod_cd_id = ped.fk_pedprod_cd_id
+GROUP BY c.cate_tx_nome;
+
+select * from selecionaItensPorCategoria;
+
+-- Consulta os produtos e suas descrições
+create view produtosDescricao as
+select prod_tx_nome as produto, prod_tx_descricao as descrição from produto;
+
+select * from produtosDescricao;
+
+-- Consulta usuarios e seus telefones
+create view usuariosTelefone as
+select
+	usuario_tx_nome as nome_usuario,
+	cont_tx_telfix as telefone
+from
+	usuario
+inner join contato on
+	usuario.fk_contato_cd_id = contato.contato_cd_id;
+
+select * from usuariosTelefone;
+
+-- Consulta valor eletrônicos
+create view consultaValorEletronico as
+select
+	p.prod_tx_nome as produto,
+	p.prod_nm_valoruni as preco_unitario
+from
+	produto p
+inner join categoria c on
+	p.fk_cate_id = c.cate_cd_id
+where
+	c.cate_tx_nome = 'Eletrônicos';
+
+select * from consultaValorEletronico;
+
+-- Consulta pedidos por um usuario
+create view pedidosUsuarios as
+select
+	u.usuario_tx_nome as nome_usuario,
+	ped.pedido_cd_id as numero_pedido,
+	pp.pedprod_dt_data as data_pedido,
+	pr.prod_tx_nome as nome_produto,
+	pp.pedprod_int_qnt as quantidade
+from
+	usuario u
+inner join pedido ped on
+	u.usuario_cd_id = ped.fk_usuario_cd_id
+inner join pedidoproduto pp on
+	ped.fk_pedprod_cd_id = pp.pedprod_cd_id
+inner join produto pr on
+	pp.fk_prod_cd_id = pr.prod_cd_id
+where
+	u.usuario_tx_nome = 'Rian';
+
+select * from pedidosUsuarios;
+
+--Criando os usuario:
+create user vendedor1 password '123456';
+create user comprador1 password '111111';
+
+--Dando permissão para a role vendedor:
+GRANT SELECT, INSERT, UPDATE, DELETE ON produto, categoria TO vendedor1;
+select * from produto;
+select * from usuario;
+
+--Dando permissão para a role comprador:
+GRANT select on produto, categoria, pedidoproduto to comprador1;
+select * from categoria;
+select * from usuario;
+
+
