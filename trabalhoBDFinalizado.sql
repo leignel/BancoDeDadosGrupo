@@ -1,4 +1,4 @@
-create database ofertas_express;
+create database ofertas_express1;
 
 --Grupo 2: Projeto final
 
@@ -120,35 +120,35 @@ insert into categoria(cate_tx_nome,cate_tx_descricao) values
 
 --4)Usuário:
 insert into usuario(usuario_tx_nome,usuario_tx_login,usuario_tx_cpf,usuario_tx_nascimento,fk_end_cd_id,fk_contato_cd_id) values
-('Rian','rianzingamer08','123.456.789-01','23/03/1998',2,1),
-('Cristian','leignelsonpedreiro','987.654.321-09','23/09/1995',1,2),
-('Felipe','felipeDoTremBala','562.555.545-85','13/09/2001',4,3),
-('Eduardo','eduardoEmonica','819.239.008-77','20/11/1990',5,4),
-('Igor','igorbatima','777.777.777-77','21/03/2005',3,5);
+('Rian','rianzingamer08','123.456.789-01','1998-03-23',2,1),
+('Cristian','leignelsonpedreiro','987.654.321-09','1995-09-23',1,2),
+('Felipe','felipeDoTremBala','562.555.545-85','1995-09-23',4,3),
+('Eduardo','eduardoEmonica','819.239.008-77','1990-11-20',5,4),
+('Igor','igorbatima','777.777.777-77','2005-03-21',3,5);
 
 --5)Produto:
 insert into produto(prod_tx_nome, prod_tx_descricao,prod_int_qntestoque,prod_dt_datafabri, prod_nm_valoruni,fk_usuario_id,fk_cate_id)values
-('Iphone 25','Preto 256 gb', 5,'25/08/2020',12000.00,5,1),
-('Forno a jato','Possui 10 bocas e um componente de foguete', 10,'17/02/2021',20000.00,4,5),
-('Nerf minigun','Azul com dois mil cartuchos', 30,'25/12/2022',150.00,3,2),
-('Casaco da nike de tricô','Azul marinha', 100,'21/08/2023',750.00,2,3),
-('Grimório perdido','Todas as magias, literalmente todas', 1,'20/07/1320',500000.00,1,4);
+('Iphone 25','Preto 256 gb', 5,'2020-08-25',12000.00,5,1),
+('Forno a jato','Possui 10 bocas e um componente de foguete', 10,'2021-02-17',20000.00,4,5),
+('Nerf minigun','Azul com dois mil cartuchos', 30,'2022-12-25',150.00,3,2),
+('Casaco da nike de tricô','Azul marinha', 100,'2023-08-21',750.00,2,3),
+('Grimório perdido','Todas as magias, literalmente todas', 1,'1320-07-20',500000.00,1,4);
 
 --6)Pedido-Produto:
 insert into pedidoproduto(pedprod_dt_data, pedprod_int_qnt,fk_prod_cd_id) values
-('10/08/2023',4,1),
-('12/08/2023',2,3),
-('13/08/2023',1,5),
-('14/08/2023',8,2),
-('22/08/2023',1,4);
+('2023-08-10',4,1),
+('2023-08-12',2,3),
+('2023-08-13',1,5),
+('2023-08-14',8,2),
+('2023-08-22',1,4);
 
 --7)Pedido:
 insert into pedido(pedido_dt_data,fk_pedprod_cd_id,fk_usuario_cd_id) values
-('09/08/2023',1,5),
-('09/08/2023',3,3),
-('09/08/2023',5,1),
-('09/08/2023',2,4),
-('09/08/2023',4,2);
+('2023-08-09',1,5),
+('2023-08-09',3,3),
+('2023-08-09',5,1),
+('2023-08-09',2,4),
+('2023-08-09',4,2);
 
 -- Crie uma view de nota fiscal
 CREATE VIEW nota_fiscal AS
@@ -241,17 +241,30 @@ where
 select * from pedidosUsuarios;
 
 --Criando os usuario:
-create user vendedor1 password '123456';
-create user comprador1 password '111111';
+create user vendedor2 password '123456';
+create user comprador2 password '111111';
 
 --Dando permissão para a role vendedor:
-GRANT SELECT, INSERT, UPDATE, DELETE ON produto, categoria TO vendedor1;
+GRANT SELECT, INSERT, UPDATE, DELETE ON produto, categoria TO vendedor2;
 select * from produto;
 select * from usuario;
 
 --Dando permissão para a role comprador:
-GRANT select on produto, categoria, pedidoproduto to comprador1;
+GRANT select on produto, categoria, pedidoproduto to comprador2;
 select * from categoria;
 select * from usuario;
+
+--Update para atualizar o brinquedo nerf para um boneco colecionavel.
+update produto set prod_tx_nome = 'Boneco colecionavel do batman' where prod_cd_id = 3;
+
+--Deletando pedido com base no ID
+delete from pedido where pedido_cd_id = 1;
+
+--Criando indices 
+CREATE INDEX idx_pedido_data ON pedido (pedido_dt_data);
+CREATE INDEX idx_pedidoproduto_produto ON pedidoproduto (fk_prod_cd_id);
+CREATE INDEX idx_produto_datafabricacao ON produto (prod_dt_datafabri);
+CREATE INDEX idx_pedidoproduto_data ON pedidoproduto (pedprod_dt_data);
+CREATE INDEX idx_produto_categoria ON produto (fk_cate_id);
 
 
