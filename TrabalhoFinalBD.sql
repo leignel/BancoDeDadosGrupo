@@ -266,5 +266,3 @@ CREATE INDEX idx_pedidoproduto_produto ON pedidoproduto (fk_prod_cd_id);
 CREATE INDEX idx_produto_datafabricacao ON produto (prod_dt_datafabri);
 CREATE INDEX idx_pedidoproduto_data ON pedidoproduto (pedprod_dt_data);
 CREATE INDEX idx_produto_categoria ON produto (fk_cate_id);
-
-
