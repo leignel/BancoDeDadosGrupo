@@ -48,8 +48,10 @@
 
   <h2>Fluxogramas Utilizados</h2>
   <div align="center">
-    <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/1d6cb6b1-b25d-4b2e-be20-7b761045349d" alt="Fluxograma 1">
-    <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/bf5bdad5-02ea-40a6-be30-7b9ef9abc277" alt="Fluxograma 2">
+  ## Fluxograma Lógico  
+  <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/1d6cb6b1-b25d-4b2e-be20-7b761045349d" alt="Fluxograma 1">
+  ## Fluxograma Conceitual
+  <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/bf5bdad5-02ea-40a6-be30-7b9ef9abc277" alt="Fluxograma 2">
   </div>
 
   <h2>Tecnologias Utilizadas</h2>
