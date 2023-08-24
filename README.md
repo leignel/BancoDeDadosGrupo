@@ -34,6 +34,12 @@
   - Livros: Descubra uma diversidade de livros para todas as idades.
   - Cozinha: Encontre produtos e utensílios de cozinha para tornar suas refeições ainda mais especiais.
 
+  # Fluxogramas Utilizados
+
+  ![Fluxograma 1](https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/1d6cb6b1-b25d-4b2e-be20-7b761045349d)
+  ![Fluxograma 2](https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/bf5bdad5-02ea-40a6-be30-7b9ef9abc277)
+
+
   ## Tecnologias Utilizadas 
 - <img src="https://github.com/leignel/BancoDeDadosIndividual/assets/141193350/3bce26c4-e151-4a50-b1b6-3ba2bf3fc0c5" height="50" width="50" > [DBeaver](https://dbeaver.io/) 
 - <img src="https://github.com/leignel/BancoDeDadosIndividual/assets/141193350/39040170-4fb3-4955-b438-58cde5253262" height="50" width="50" > [Postgressql](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) 
