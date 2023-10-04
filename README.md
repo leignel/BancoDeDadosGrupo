@@ -5,7 +5,7 @@
 <body>
   <h1 align="center">Bem vindos à Ofertas Express</h1>
   <div align="center">
-    <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/84f820c1-115d-476a-babb-574de604d578"alt="Ofertas Express">
+    <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/66ab258b-5bba-4e2a-9e6e-5eec2759cc4f"alt="Ofertas Express">
   </div>
 
   <p>Bem vindos ao Ofertas Express, o seu destino para produtos diferenciados e únicos! Nós somos um marketplace
@@ -48,18 +48,16 @@
 
   <h2>Fluxogramas Utilizados</h2>
   <div align="center">
-  ## Fluxograma Lógico  
-  <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/1d6cb6b1-b25d-4b2e-be20-7b761045349d" alt="Fluxograma 1">
-  ## Fluxograma Conceitual
-  <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/bf5bdad5-02ea-40a6-be30-7b9ef9abc277" alt="Fluxograma 2">
+  ## Diagrama Lógico  
+  <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/3ae15531-eb6a-4a69-987d-dd43c01b42ce" alt="Fluxograma 1">
+  ## Diagrama Conceitual
+  <img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/2bd3d77f-ebe4-4eda-863f-7ebb90bd21ce" alt="Fluxograma 2">
   </div>
 
   <h2>Tecnologias Utilizadas</h2>
   <ul>
-    <li><img src="https://github.com/leignel/BancoDeDadosIndividual/assets/141193350/3bce26c4-e151-4a50-b1b6-3ba2bf3fc0c5"
-        height="30" width="30"> <a href="https://dbeaver.io/">DBeaver</a></li>
-    <li><img src="https://github.com/leignel/BancoDeDadosIndividual/assets/141193350/39040170-4fb3-4955-b438-58cde5253262"
-        height="30" width="30"> <a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">PostgreSQL</a>
+    <li><img src="https://github.com/leignel/BancoDeDadosGrupo/assets/141193350/f60bf265-ba1c-4c83-8a68-e197fe5a3d07"height="30" width="30"> <a href="https://dbeaver.io/">DBeaver</a></li>
+    <li><img src="https://github.com/leignel/BancoDeDadosGrupo/blob/main/Imagens/262071940-39040170-4fb3-4955-b438-58cde5253262.png"height="30" width="30"> <a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">PostgreSQL</a>
     </li>
   </ul>
 
